@@ -1,0 +1,9 @@
+# 我自己遇到的 Emby 服务
+payload:
+  - DOMAIN-SUFFIX,lite.cn2gias.uk
+  - DOMAIN-SUFFIX,emby.heisi.org
+  - DOMAIN-SUFFIX,cf.lilyemby.my 
+  - DOMAIN-SUFFIX,o3.lilyemby.my 
+  - DOMAIN-SUFFIX,o2.lilyemby.my 
+  - DOMAIN-SUFFIX,o1.lilyemby.my 
+  - DOMAIN-SUFFIX,bava.mebimmer.de
