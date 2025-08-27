@@ -25,7 +25,8 @@ rule-providers:
   Google: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/Ruleset/Google.yaml", interval: 86400, path: ./ACL4SSR/Google.yaml}
   GoogleCN: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/Ruleset/GoogleCN.yaml", interval: 86400, path: ./ACL4SSR/GoogleCN.yaml}
   GoogleFCM: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/Ruleset/GoogleFCM.yaml", interval: 86400, path: ./ACL4SSR/GoogleFCM.yaml}  
-  YouTube: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/Ruleset/YouTube.yaml", interval: 86400, path: ./ACL4SSR/YouTube.yaml}    
+  YouTube: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/Ruleset/YouTube.yaml", interval: 86400, path: ./ACL4SSR/YouTube.yaml}
+  Emby: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/xinchenmi/mihomo@main/Emby_no_ip.yaml", interval: 86400, path: ./xinchenmi/mihomo/blob/main/Emby_no_ip.yaml}
   ProxyLite: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/ProxyLite.yaml", interval: 86400, path: ./ACL4SSR/ProxyLite.yaml}
   Telegram: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/Ruleset/Telegram.yaml", interval: 86400, path: ./ACL4SSR/Telegram.yaml}
   AI: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/Ruleset/AI.yaml", interval: 86400, path: ./ACL4SSR/AI.yaml}
@@ -39,8 +40,7 @@ rule-providers:
   ProxyMedia: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/ProxyMedia.yaml", interval: 86400, path: ./ACL4SSR/ProxyMedia.yaml}
 
 rules:
-  - PROCESS-NAME,com.mountains.hills,👁 emby
-  - PROCESS-NAME,com.hush.yamby,👁 emby
+  - RULE-SET,Emby_no_ip,👁 Emby
   - IP-CIDR,221.228.32.0/24,🚀 节点选择
   - DOMAIN-SUFFIX,lowendtalk.com,🎯 全球直连  
   - RULE-SET,jsproxy,🚀 节点选择 
