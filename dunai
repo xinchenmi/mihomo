@@ -3,7 +3,7 @@ proxy-groups:
   - {name: ♻️ 自动选择, type: url-test,  url: https://www.gstatic.com/generate_204, include-all: true, interval: 300, tolerance: 50}
   - {name: 📲 电报信息, include-all: true, type: select, proxies: [🚀 节点选择, 🎯 全球直连, ♻️ 自动选择]}
   - {name: 💬 人工智能, include-all: true, type: select, proxies: [🚀 节点选择, 🎯 全球直连, ♻️ 自动选择]}
-  - {name: 👁 emby影视, include-all: true, type: select, proxies: [🚀 节点选择, 🎯 全球直连, ♻️ 自动选择]}
+  - {name: 👁 emby, include-all: true, type: select, proxies: [🚀 节点选择, 🎯 全球直连, ♻️ 自动选择]}
   - {name: 🌍 国外媒体, include-all: true, type: select, proxies: [🚀 节点选择, 🎯 全球直连, ♻️ 自动选择]}
   - {name: 📺 巴哈姆特, include-all: true, type: select, proxies: [🚀 节点选择, 🎯 全球直连, ♻️ 自动选择]}
   - {name: 📹 油管视频, include-all: true, type: select, proxies: [🚀 节点选择, 🎯 全球直连, ♻️ 自动选择]}  
@@ -40,7 +40,7 @@ rule-providers:
   ProxyMedia: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/ProxyMedia.yaml", interval: 86400, path: ./ACL4SSR/ProxyMedia.yaml}
 
 rules:
-  - RULE-SET,Emby,👁 emby影视
+  - RULE-SET,Emby,👁 emby
   - IP-CIDR,221.228.32.0/24,🚀 节点选择
   - DOMAIN-SUFFIX,lowendtalk.com,🎯 全球直连  
   - RULE-SET,jsproxy,🚀 节点选择 
