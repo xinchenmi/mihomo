@@ -40,7 +40,7 @@ rule-providers:
   ProxyMedia: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/ProxyMedia.yaml", interval: 86400, path: ./ACL4SSR/ProxyMedia.yaml}
 
 rules:
-  - RULE-SET,Emby_no_ip,👁 Emby
+  - RULE-SET,Emby_no_ip,👁 emby影视
   - IP-CIDR,221.228.32.0/24,🚀 节点选择
   - DOMAIN-SUFFIX,lowendtalk.com,🎯 全球直连  
   - RULE-SET,jsproxy,🚀 节点选择 
