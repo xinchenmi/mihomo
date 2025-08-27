@@ -26,7 +26,7 @@ rule-providers:
   GoogleCN: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/Ruleset/GoogleCN.yaml", interval: 86400, path: ./ACL4SSR/GoogleCN.yaml}
   GoogleFCM: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/Ruleset/GoogleFCM.yaml", interval: 86400, path: ./ACL4SSR/GoogleFCM.yaml}  
   YouTube: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/Ruleset/YouTube.yaml", interval: 86400, path: ./ACL4SSR/YouTube.yaml}
-  Emby: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/xinchenmi/mihomo@main/Emby_no_ip.yaml", interval: 86400, path: ./xinchenmi/mihomo/blob/main/Emby_no_ip.yaml}
+  Emby: {behavior: classical, type: http, url: "https://raw.githubusercontent.com/xinchenmi/mihomo/refs/heads/main/Emby_no_ip.yaml", interval: 86400, path: ./xinchenmi/mihomo/blob/main/Emby_no_ip.yaml}
   ProxyLite: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/ProxyLite.yaml", interval: 86400, path: ./ACL4SSR/ProxyLite.yaml}
   Telegram: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/Ruleset/Telegram.yaml", interval: 86400, path: ./ACL4SSR/Telegram.yaml}
   AI: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/Ruleset/AI.yaml", interval: 86400, path: ./ACL4SSR/AI.yaml}
