@@ -1,0 +1,71 @@
+proxy-groups:
+  - {name: 🚀 节点选择, include-all: true, type: select, proxies: [♻️ 自动选择, DIRECT]}
+  - {name: ♻️ 自动选择, type: url-test,  url: https://www.gstatic.com/generate_204, include-all: true, interval: 300, tolerance: 50}
+  - {name: 📲 电报信息, include-all: true, type: select, proxies: [🚀 节点选择, 🎯 全球直连, ♻️ 自动选择]}
+  - {name: 💬 人工智能, include-all: true, type: select, proxies: [🚀 节点选择, 🎯 全球直连, ♻️ 自动选择]}
+  - {name: 🌍 国外媒体, include-all: true, type: select, proxies: [🚀 节点选择, 🎯 全球直连, ♻️ 自动选择]}
+  - {name: 📺 巴哈姆特, include-all: true, type: select, proxies: [🚀 节点选择, 🎯 全球直连, ♻️ 自动选择]}
+  - {name: 📹 油管视频, include-all: true, type: select, proxies: [🚀 节点选择, 🎯 全球直连, ♻️ 自动选择]}  
+  - {name: 📢 谷歌服务, include-all: true, type: select, proxies: [🚀 节点选择, 🎯 全球直连, ♻️ 自动选择]}
+  - {name: Ⓜ️ 微软服务, include-all: true, type: select, proxies: [🚀 节点选择, 🎯 全球直连, ♻️ 自动选择]}
+  - {name: 🍎 苹果服务, include-all: true,  type: select, proxies: [🚀 节点选择, 🎯 全球直连, ♻️ 自动选择]}
+  - {name: 🎯 全球直连, type: select, proxies: [DIRECT]}
+  - {name: 🛑 全球拦截, type: select, proxies: [REJECT]}
+  - {name: 🐟 漏网之鱼, include-all: true, type: select, proxies: [🚀 节点选择, 🎯 全球直连, ♻️ 自动选择]}
+
+rule-providers:
+  rule-anchor:
+  ip: &ip {type: http, interval: 86400, behavior: ipcidr, format: mrs}
+  domain: &domain {type: http, interval: 86400, behavior: domain, format: mrs}
+  class: &class {type: http, interval: 86400, behavior: classical, format: text}
+rule-providers: 
+  private_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
+  proxylite: { <<: *class, url: "https://raw.githubusercontent.com/qichiyuhub/rule/refs/heads/main/proxy.list"}
+  ai: {  <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.mrs" }
+  youtube_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.mrs"}
+  google_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"}
+  github_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs"}
+  telegram_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs"}
+  netflix_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/netflix.mrs"}
+  paypal_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/paypal.mrs"}
+  onedrive_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/onedrive.mrs"}
+  microsoft_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.mrs"}
+  apple_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple-cn.mrs"}
+  speedtest_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/ookla-speedtest.mrs"}
+  tiktok_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/tiktok.mrs"}
+  geolocation-!cn: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.mrs"}
+  cn_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"}
+  
+  private_ip: {<<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs"}
+  cn_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs"}
+  google_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs"}
+  telegram_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs"}
+  netflix_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/netflix.mrs"}
+  apple_ip: {<<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo-lite/geoip/apple.mrs"}
+rules:
+  - IP-CIDR,221.228.32.0/24,🚀 节点选择
+  - DOMAIN-SUFFIX,lowendtalk.com,🎯 全球直连  
+  - RULE-SET,jsproxy,🚀 节点选择 
+  - RULE-SET,OneDrive,🚀 节点选择  
+  - RULE-SET,Microsoft,Ⓜ️ 微软服务
+  - RULE-SET,Apple,🍎 苹果服务
+  - RULE-SET,LocalAreaNetwork,🎯 全球直连
+  - RULE-SET,UnBan,🎯 全球直连
+  - RULE-SET,ChinaIp,🎯 全球直连  
+  - RULE-SET,ChinaDomain,🎯 全球直连
+  - RULE-SET,ChinaCompanyIp,🎯 全球直连
+  - RULE-SET,SteamRegionCheck,🎯 全球直连
+  - RULE-SET,YouTube,📹 油管视频
+  - RULE-SET,Google,📢 谷歌服务 
+  - RULE-SET,GoogleCN,📢 谷歌服务
+  - RULE-SET,GoogleFCM,📢 谷歌服务
+  - RULE-SET,Telegram,📲 电报信息
+  - RULE-SET,AI,💬 人工智能
+  - DOMAIN-SUFFIX,imgur.com,💬 人工智能
+  - RULE-SET,Bahamut,📺 巴哈姆特  
+  - RULE-SET,ProxyMedia,🌍 国外媒体
+  - RULE-SET,ProxyLite,🚀 节点选择
+  - RULE-SET,BanAD,🛑 全球拦截
+  - RULE-SET,BanProgramAD,🛑 全球拦截
+  - RULE-SET,BanEasyList,🛑 全球拦截
+  - MATCH,🐟 漏网之鱼
