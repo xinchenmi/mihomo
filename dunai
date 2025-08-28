@@ -74,18 +74,17 @@ rules:
   - PROCESS-NAME,com.mountains.hills,👁 emby
   - PROCESS-NAME,com.hush.yamby,👁 emby
   - RULE-SET,Emby_no_ip,👁 emby
-  - IP-CIDR,221.228.32.0/24,🚀 节点选择
-  - DOMAIN-SUFFIX,lowendtalk.com,🎯 全球直连  
   - RULE-SET,jsproxy,🚀 节点选择 
   - RULE-SET,OneDrive,🚀 节点选择  
   - RULE-SET,Microsoft,Ⓜ️ 微软服务
   - RULE-SET,Apple,🍎 苹果服务
-  - RULE-SET,LocalAreaNetwork,🎯 全球直连
-  - RULE-SET,UnBan,🎯 全球直连
-  - RULE-SET,ChinaIp,🎯 全球直连  
-  - RULE-SET,ChinaDomain,🎯 全球直连
-  - RULE-SET,ChinaCompanyIp,🎯 全球直连
-  - RULE-SET,SteamRegionCheck,🎯 全球直连
+  - RULE-SET,LocalAreaNetwork,DIRECT
+  - RULE-SET,UnBan,DIRECT
+  - RULE-SET,ChinaIp,DIRECT  
+  - RULE-SET,ChinaDomain,DIRECT
+  - RULE-SET,ChinaCompanyIp,DIRECT
+  - RULE-SET,SteamRegionCheck,DIRECT
+  - RULE-SET,Hetzner,DIRECT
   - RULE-SET,YouTube,📹 油管视频
   - RULE-SET,Google,📢 谷歌服务 
   - RULE-SET,GoogleCN,📢 谷歌服务
@@ -96,7 +95,7 @@ rules:
   - RULE-SET,Bahamut,📺 巴哈姆特  
   - RULE-SET,ProxyMedia,🌍 国外媒体
   - RULE-SET,ProxyLite,🚀 节点选择
-  - RULE-SET,BanAD,🛑 全球拦截
-  - RULE-SET,BanProgramAD,🛑 全球拦截
-  - RULE-SET,BanEasyList,🛑 全球拦截
+  - RULE-SET,BanAD,REJECT
+  - RULE-SET,BanProgramAD,REJECT
+  - RULE-SET,BanEasyList,REJECT
   - MATCH,🐟 漏网之鱼
