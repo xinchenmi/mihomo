@@ -1,18 +1,38 @@
+dns:
+  enable: true
+  listen: ':53'
+  enhanced-mode: 'fake-ip'
+  fake-ip-range: '198.18.0.1/16'
+  fake-ip-filter-mode: 'blacklist'
+  prefer-h3: false
+  respect-rules: false
+  use-hosts: true
+  ipv6: false
+  fake-ip-filter: ['*.lan', '*.local', '*.arpa', 'localhost.ptlogin2.qq.com', '*.msftncsi.com', 'www.msftconnecttest.com', 'time.*.com', 'ntp.*.com', '+.market.xiaomi.com']
+  default-nameserver: ['system', '223.6.6.6', '119.29.29.29', '8.8.8.8']
+  nameserver: ['8.8.8.8', 'https://doh.pub/dns-query', 'https://dns.alidns.com/dns-query']
+  proxy-server-nameserver: ['https://doh.pub/dns-query', 'https://dns.alidns.com/dns-query', 'tls://223.5.5.5']
+  direct-nameserver-follow-policy: false
+  fallback-filter:
+    geoip: true
+    geoip-code: 'CN'
+    ipcidr: ['240.0.0.0/4', '0.0.0.0/32']
+    domain: ['+.google.com', '+.facebook.com', '+.youtube.com', '+.github.com', '+.twitter.com', '+.telegram.org']
+
+
 proxy-groups:
-  - {name: 🚀 节点选择, include-all: true, type: select, proxies: [♻️ 自动选择, DIRECT]}
-  - {name: ♻️ 自动选择, type: url-test,  url: https://www.gstatic.com/generate_204, include-all: true, interval: 300, tolerance: 50}
-  - {name: 📲 电报信息, include-all: true, type: select, proxies: [🚀 节点选择, 🎯 全球直连, ♻️ 自动选择]}
-  - {name: 💬 人工智能, include-all: true, type: select, proxies: [🚀 节点选择, 🎯 全球直连, ♻️ 自动选择]}
-  - {name: 👁 emby, include-all: true, type: select, proxies: [🚀 节点选择, 🎯 全球直连, ♻️ 自动选择]}
-  - {name: 🌍 国外媒体, include-all: true, type: select, proxies: [🚀 节点选择, 🎯 全球直连, ♻️ 自动选择]}
-  - {name: 📺 巴哈姆特, include-all: true, type: select, proxies: [🚀 节点选择, 🎯 全球直连, ♻️ 自动选择]}
-  - {name: 📹 油管视频, include-all: true, type: select, proxies: [🚀 节点选择, 🎯 全球直连, ♻️ 自动选择]}  
-  - {name: 📢 谷歌服务, include-all: true, type: select, proxies: [🚀 节点选择, 🎯 全球直连, ♻️ 自动选择]}
-  - {name: Ⓜ️ 微软服务, include-all: true, type: select, proxies: [🚀 节点选择, 🎯 全球直连, ♻️ 自动选择]}
-  - {name: 🍎 苹果服务, include-all: true,  type: select, proxies: [🚀 节点选择, 🎯 全球直连, ♻️ 自动选择]}
-  - {name: 🎯 全球直连, type: select, proxies: [DIRECT]}
-  - {name: 🛑 全球拦截, type: select, proxies: [REJECT]}
-  - {name: 🐟 漏网之鱼, include-all: true, type: select, proxies: [🚀 节点选择, 🎯 全球直连, ♻️ 自动选择]}
+  - {name: 🚀 节点选择, include-all: true, type: select, proxies: [♻️ 自动选择, DIRECT], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Proxy.png }
+  - {name: ♻️ 自动选择, include-all: true, type: url-test, url: https://www.gstatic.com/generate_204, interval: 150, tolerance: 50, icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Auto.png}
+  - {name: 📲 电报信息, include-all: true, type: select, proxies: [🚀 节点选择, DIRECT, ♻️ 自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Telegram.png}
+  - {name: 💬 人工智能, include-all: true, type: select, proxies: [🚀 节点选择, DIRECT, ♻️ 自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/ChatGPT.png}
+  - {name: 🌍 国外媒体, include-all: true, type: select, proxies: [🚀 节点选择, DIRECT, ♻️ 自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Netflix.png}
+  - {name: 📺 巴哈姆特, include-all: true, type: select, proxies: [🚀 节点选择, DIRECT, ♻️ 自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Bahamut.png}
+  - {name: 📹 油管视频, include-all: true, type: select, proxies: [🚀 节点选择, DIRECT, ♻️ 自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/YouTube.png}
+  - {name: 👁 emby, include-all: true, type: select, proxies: [🚀 节点选择, DIRECT, ♻️ 自动选择], icon: https://quantil.jsdelivr.net/gh/walkxcode/dashboard-icons/png/emby.png}    
+  - {name: 📢 谷歌服务, include-all: true, type: select, proxies: [🚀 节点选择, DIRECT, ♻️ 自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Google.png}
+  - {name: Ⓜ️ 微软服务, include-all: true, type: select, proxies: [🚀 节点选择, DIRECT, ♻️ 自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Microsoft.png}
+  - {name: 🍎 苹果服务, include-all: true, type: select, proxies: [🚀 节点选择, DIRECT, ♻️ 自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Apple.png}
+  - {name: 🐟 漏网之鱼, include-all: true, type: select, proxies: [🚀 节点选择, DIRECT, ♻️ 自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Final.png}
 
 rule-providers:
   jsproxy: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/qklg/pic@master/ruleset/jsproxy.yaml", interval: 86400, path: ./ACL4SSR/jsproxy.yaml}
@@ -22,11 +42,11 @@ rule-providers:
   ChinaDomain: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/ChinaDomain.yaml", interval: 86400, path: ./ACL4SSR/ChinaDomain.yaml}
   ChinaCompanyIp: {behavior: ipcidr, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/ChinaCompanyIp.yaml", interval: 86400, path: ./ACL4SSR/ChinaCompanyIp.yaml}
   SteamRegionCheck: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/qklg/pic@master/ruleset/SteamRegionCheck.yaml", interval: 86400, path: ./ACL4SSR/SteamRegionCheck.yaml}
+  Hetzner: {behavior: domain, type: http, url: "https://quantil.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/hetzner.yaml", interval: 86400, path: ./ACL4SSR/Hetzner.yaml}
   Google: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/Ruleset/Google.yaml", interval: 86400, path: ./ACL4SSR/Google.yaml}
   GoogleCN: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/Ruleset/GoogleCN.yaml", interval: 86400, path: ./ACL4SSR/GoogleCN.yaml}
   GoogleFCM: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/Ruleset/GoogleFCM.yaml", interval: 86400, path: ./ACL4SSR/GoogleFCM.yaml}  
-  YouTube: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/Ruleset/YouTube.yaml", interval: 86400, path: ./ACL4SSR/YouTube.yaml}
-  Emby: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/xinchenmi/mihomo@main/Emby_no_ip.yaml", interval: 86400, path: ./xinchenmi/mihomo/blob/main/Emby_no_ip.yaml}
+  YouTube: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/Ruleset/YouTube.yaml", interval: 86400, path: ./ACL4SSR/YouTube.yaml}    
   ProxyLite: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/ProxyLite.yaml", interval: 86400, path: ./ACL4SSR/ProxyLite.yaml}
   Telegram: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/Ruleset/Telegram.yaml", interval: 86400, path: ./ACL4SSR/Telegram.yaml}
   AI: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/Ruleset/AI.yaml", interval: 86400, path: ./ACL4SSR/AI.yaml}
@@ -38,9 +58,12 @@ rule-providers:
   BanProgramAD: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/BanProgramAD.yaml", interval: 86400, path: ./ACL4SSR/BanProgramAD.yaml}
   BanEasyList: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/BanEasyList.yaml", interval: 86400, path: ./ACL4SSR/BanEasyList.yaml}
   ProxyMedia: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/ProxyMedia.yaml", interval: 86400, path: ./ACL4SSR/ProxyMedia.yaml}
+  Emby_no_ip: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/xinchenmi/mihomo@main/Emby_no_ip.yaml", interval: 86400, path: ./ACL4SSR/Emby_no_ip}
 
 rules:
-  - RULE-SET,Emby,👁 emby
+  - PROCESS-NAME,com.mountains.hills,👁 emby
+  - PROCESS-NAME,com.hush.yamby,👁 emby
+  - RULE-SET,Emby_no_ip,👁 emby
   - IP-CIDR,221.228.32.0/24,🚀 节点选择
   - DOMAIN-SUFFIX,lowendtalk.com,🎯 全球直连  
   - RULE-SET,jsproxy,🚀 节点选择 
