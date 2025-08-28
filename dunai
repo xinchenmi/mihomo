@@ -1,3 +1,13 @@
+port: 38911
+socks-port: 38101
+allow-lan: false
+mode: Rule
+log-level: info
+external-controller: '127.0.0.1:31011'
+secret: 'Igai1OrpFbx4pP1i5Gk1'
+ipv6: false
+
+hosts: {'*.hostloc.com': 23.225.155.86, '*.nodeseek.com': 104.26.10.72, '*.linux.do': 104.26.12.174, '*.githubusercontent.com': 185.199.108.133}
 dns:
   enable: true
   listen: ':53'
