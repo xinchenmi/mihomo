@@ -29,7 +29,6 @@ dns:
     ipcidr: ['240.0.0.0/4', '0.0.0.0/32']
     domain: ['+.google.com', '+.facebook.com', '+.youtube.com', '+.github.com', '+.twitter.com', '+.telegram.org']
 
-
 proxy-groups:
   - {name: 🚀 节点选择, include-all: true, type: select, proxies: [♻️ 自动选择, DIRECT], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Proxy.png }
   - {name: ♻️ 自动选择, include-all: true, type: url-test, url: https://www.gstatic.com/generate_204, interval: 150, tolerance: 50, icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Auto.png}
