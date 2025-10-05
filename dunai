@@ -30,18 +30,20 @@ dns:
     domain: ['+.google.com', '+.facebook.com', '+.youtube.com', '+.github.com', '+.twitter.com', '+.telegram.org']
 
 proxy-groups:
-  - {name: 🚀 节点选择, include-all: true, type: select, proxies: [♻️ 自动选择, DIRECT], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Proxy.png }
-  - {name: ♻️ 自动选择, include-all: true, type: url-test, url: https://www.gstatic.com/generate_204, interval: 150, tolerance: 50, icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Auto.png}
-  - {name: 📲 电报信息, include-all: true, type: select, proxies: [🚀 节点选择, DIRECT, ♻️ 自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Telegram.png}
-  - {name: 💬 人工智能, include-all: true, type: select, proxies: [🚀 节点选择, DIRECT, ♻️ 自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/ChatGPT.png}
-  - {name: 🌍 国外媒体, include-all: true, type: select, proxies: [🚀 节点选择, DIRECT, ♻️ 自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Netflix.png}
-  - {name: 📺 巴哈姆特, include-all: true, type: select, proxies: [🚀 节点选择, DIRECT, ♻️ 自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Bahamut.png}
-  - {name: 📹 油管视频, include-all: true, type: select, proxies: [🚀 节点选择, DIRECT, ♻️ 自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/YouTube.png}
-  - {name: 👁 emby, include-all: true, type: select, proxies: [🚀 节点选择, DIRECT, ♻️ 自动选择], icon: https://quantil.jsdelivr.net/gh/walkxcode/dashboard-icons/png/emby.png}    
-  - {name: 📢 谷歌服务, include-all: true, type: select, proxies: [🚀 节点选择, DIRECT, ♻️ 自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Google.png}
-  - {name: Ⓜ️ 微软服务, include-all: true, type: select, proxies: [🚀 节点选择, DIRECT, ♻️ 自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Microsoft.png}
-  - {name: 🍎 苹果服务, include-all: true, type: select, proxies: [🚀 节点选择, DIRECT, ♻️ 自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Apple.png}
-  - {name: 🐟 漏网之鱼, include-all: true, type: select, proxies: [🚀 节点选择, DIRECT, ♻️ 自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Final.png}
+  - {name:  节点选择, include-all: true, type: select, proxies: [ 自动选择, DIRECT], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Proxy.png }
+  - {name:  自动选择, include-all: true, type: url-test, url: https://www.gstatic.com/generate_204, interval: 150, tolerance: 50, icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Auto.png}
+  - {name:  电报新加坡, include-all: true, type: select, proxies: [ 节点选择, DIRECT,  自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Telegram.png}
+  - {name:  电报美国, include-all: true, type: select, proxies: [ 节点选择, DIRECT,  自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Telegram.png}
+  - {name:  电报荷兰, include-all: true, type: select, proxies: [ 节点选择, DIRECT,  自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Telegram.png}
+  - {name:  人工智能, include-all: true, type: select, proxies: [ 节点选择, DIRECT,  自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/ChatGPT.png}
+  - {name:  国外媒体, include-all: true, type: select, proxies: [ 节点选择, DIRECT,  自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Netflix.png}
+  - {name:  巴哈姆特, include-all: true, type: select, proxies: [ 节点选择, DIRECT,  自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Bahamut.png}
+  - {name:  油管视频, include-all: true, type: select, proxies: [ 节点选择, DIRECT,  自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/YouTube.png}
+  - {name:  emby, include-all: true, type: select, proxies: [ 节点选择, DIRECT,  自动选择], icon: https://quantil.jsdelivr.net/gh/walkxcode/dashboard-icons/png/emby.png}    
+  - {name:  谷歌服务, include-all: true, type: select, proxies: [ 节点选择, DIRECT,  自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Google.png}
+  - {name:  微软服务, include-all: true, type: select, proxies: [ 节点选择, DIRECT,  自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Microsoft.png}
+  - {name:  苹果服务, include-all: true, type: select, proxies: [ 节点选择, DIRECT,  自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Apple.png}
+  - {name:  漏网之鱼, include-all: true, type: select, proxies: [ 节点选择, DIRECT,  自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Final.png}
 
 rule-providers:
   jsproxy: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/qklg/pic@master/ruleset/jsproxy.yaml", interval: 86400, path: ./ACL4SSR/jsproxy.yaml}
@@ -67,16 +69,20 @@ rule-providers:
   BanProgramAD: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/BanProgramAD.yaml", interval: 86400, path: ./ACL4SSR/BanProgramAD.yaml}
   BanEasyList: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/BanEasyList.yaml", interval: 86400, path: ./ACL4SSR/BanEasyList.yaml}
   ProxyMedia: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/ProxyMedia.yaml", interval: 86400, path: ./ACL4SSR/ProxyMedia.yaml}
-  Emby_no_ip: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/xinchenmi/mihomo@main/Emby_no_ip.yaml", interval: 86400, path: ./ACL4SSR/Emby_no_ip}
+  TelegramSG: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/qklg/pic@master/ruleset/TelegramSG.yaml", interval: 86400, path: ./ACL4SSR/TelegramSG.yaml}
+  TelegramUS: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/qklg/pic@master/ruleset/TelegramUS.yaml", interval: 86400, path: ./ACL4SSR/TelegramUS.yaml}
+  TelegramNL: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/qklg/pic@master/ruleset/TelegramNL.yaml", interval: 86400, path: ./ACL4SSR/TelegramNL.yaml}
 
 rules:
-  - PROCESS-NAME,com.mountains.hills,👁 emby
-  - PROCESS-NAME,com.hush.yamby,👁 emby
-  - RULE-SET,Emby_no_ip,👁 emby
-  - RULE-SET,jsproxy,🚀 节点选择 
-  - RULE-SET,OneDrive,🚀 节点选择  
-  - RULE-SET,Microsoft,Ⓜ️ 微软服务
-  - RULE-SET,Apple,🍎 苹果服务
+  - PROCESS-NAME,com.mountains.hills, emby
+  - PROCESS-NAME,com.hush.yamby, emby
+  - RULE-SET,jsproxy, 节点选择 
+  - RULE-SET,OneDrive, 节点选择
+  - RULE-SET,TelegramSG, 电报新加坡
+  - RULE-SET,TelegramUS, 电报美国
+  - RULE-SET,TelegramNL, 电报荷兰
+  - RULE-SET,Microsoft, 微软服务
+  - RULE-SET,Apple, 苹果服务
   - RULE-SET,LocalAreaNetwork,DIRECT
   - RULE-SET,UnBan,DIRECT
   - RULE-SET,ChinaIp,DIRECT  
@@ -84,17 +90,16 @@ rules:
   - RULE-SET,ChinaCompanyIp,DIRECT
   - RULE-SET,SteamRegionCheck,DIRECT
   - RULE-SET,Hetzner,DIRECT
-  - RULE-SET,YouTube,📹 油管视频
-  - RULE-SET,Google,📢 谷歌服务 
-  - RULE-SET,GoogleCN,📢 谷歌服务
-  - RULE-SET,GoogleFCM,📢 谷歌服务
-  - RULE-SET,Telegram,📲 电报信息
-  - RULE-SET,AI,💬 人工智能
-  - DOMAIN-SUFFIX,imgur.com,💬 人工智能
-  - RULE-SET,Bahamut,📺 巴哈姆特  
-  - RULE-SET,ProxyMedia,🌍 国外媒体
-  - RULE-SET,ProxyLite,🚀 节点选择
+  - RULE-SET,YouTube, 油管视频
+  - RULE-SET,Google, 谷歌服务 
+  - RULE-SET,GoogleCN, 谷歌服务
+  - RULE-SET,GoogleFCM, 谷歌服务
+  - RULE-SET,AI, 人工智能
+  - DOMAIN-SUFFIX,imgur.com, 人工智能
+  - RULE-SET,Bahamut, 巴哈姆特  
+  - RULE-SET,ProxyMedia, 国外媒体
+  - RULE-SET,ProxyLite, 节点选择
   - RULE-SET,BanAD,REJECT
   - RULE-SET,BanProgramAD,REJECT
   - RULE-SET,BanEasyList,REJECT
-  - MATCH,🐟 漏网之鱼
+  - MATCH, 漏网之鱼
