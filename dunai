@@ -35,7 +35,7 @@ proxy-groups:
   - {name:  电报新加坡, include-all: true, type: select, proxies: [ 节点选择, DIRECT,  自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Telegram.png}
   - {name:  电报美国, include-all: true, type: select, proxies: [ 节点选择, DIRECT,  自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Telegram.png}
   - {name:  电报荷兰, include-all: true, type: select, proxies: [ 节点选择, DIRECT,  自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Telegram.png}
-  - {name:  nodeseek, include-all: true, type: select, proxies: [ 节点选择, DIRECT,  自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Telegram.png}
+  - {name:  nodeseek, include-all: true, type: select, proxies: [ 节点选择, DIRECT,  自动选择], icon: https://cdn.jsdelivr.net/gh/Vbaethon/HOMOMIX@main/Icon/Color/Panda.png}
   - {name:  人工智能, include-all: true, type: select, proxies: [ 节点选择, DIRECT,  自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/ChatGPT.png}
   - {name:  国外媒体, include-all: true, type: select, proxies: [ 节点选择, DIRECT,  自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Netflix.png}
   - {name:  巴哈姆特, include-all: true, type: select, proxies: [ 节点选择, DIRECT,  自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Bahamut.png}
