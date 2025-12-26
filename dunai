@@ -8,24 +8,54 @@ find-process-mode: strict
 global-client-fingerprint: chrome
 
 dns:
-  enable: true
-  respect-rules: true  # 必须
-  nameserver:
-    - https://8.8.8.8/dns-query#disable-ipv6=true  # 对于nameserver-policy以外的域名，全部使用国外DNS服务器解析并丢弃ipv6（#disable-ipv6=true）
-    - https://1.1.1.1/dns-query#disable-ipv6=true
-  nameserver-policy:  # 需要国内或双栈解析（如动态域名）的域名
-    '+.ddnsdomain.xyz': '114.114.114.114' 
-    'rule-set:cn_domain':  # 域名规则'geosite:[value]'/'rule-set:[string]'
-        - https://1.12.12.12/dns-query
-        - https://223.5.5.5/dns-query
-  proxy-server-nameserver:
-        - https://1.12.12.12/dns-query
-        - https://223.5.5.5/dns-query
-  listen: '[::]:1053'
-  ipv6: true
-  enhanced-mode: redir-host
-  fake-ip-range: 198.18.0.1/16
-
+enable: true
+ipv6: false
+default-nameserver:
+- 223.5.5.5 # 阿里DNS（国内首选）
+- 119.29.29.29 # 阿里DNS备用
+nameserver:
+- tls://1.1.1.1:853 # Cloudflare DoH（国外加密备份）
+- tls://8.8.8.8:853 # Google DoH（国外加密备份）
+- https://doh.pub/dns-query # 公共DoH（冗余）
+fallback:
+- tls://1.1.1.1:853 # Cloudflare TLS备份
+- tls://8.8.8.8:853 # Google TLS备份
+fallback-filter:
+geoip: true # 按地理位置选择最优备用DNS
+geoip-code: CN # 优先中国大陆节点
+ipcidr:
+- 240.0.0.0/4 # 过滤保留IP段
+enhanced-mode: fake-ip
+fake-ip-range: 198.18.0.1/16
+use-hosts: true # 启用hosts文件优先解析
+fake-ip-filter:
+# 国内服务直连（高频优化）
+- '.lan'
+- '.localdomain'
+- '.example'
+- '.invalid'
+- '.localhost'
+- '.test'
+- '.home.arpa'
+- 'time..com' # 时间同步服务
+- 'ntp..com'
+- '.music.163.com' # 网易云音乐
+- 'music.migu.cn' # 咪咕音乐
+- 'xbox..microsoft.com' # Xbox Live
+- 'proxy.golang.org' # Go语言依赖
+- '+.stun..' # WebRTC直连
+- '.ffxiv.com' # 游戏《最终幻想14》
+# 国内基础服务保底
+- 'dns.msftncsi.com' # 微软网络诊断
+- 'www.msftncsi.com'
+- 'www.msftconnecttest.com'
+- 'localhost.ptlogin2.qq.com' # 微信/QQ登录
+# 其他安全过滤
+- '.cn' # 中国境内域名直连
+- '.com.cn'
+- '.net.cn'
+- '.org.cn'
+- '*.gov.cn'
 
 proxy-groups:
   - {name:  节点选择, include-all: true, type: select, proxies: [ 自动选择, DIRECT], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Proxy.png }
