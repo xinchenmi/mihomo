@@ -121,6 +121,13 @@ rule-providers:
     behavior: classical
     url: "https://quantil.jsdelivr.net/gh/qklg/pic@master/ruleset/TelegramNL.yaml"
     path: "./ACL4SSR/TelegramNL.yaml"
+AI:
+    type: http
+    format: yaml
+    interval: 86400
+    behavior: classical
+    url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/Ruleset/AI.yaml"
+    path: "./ACL4SSR/AI.yaml"
   cncidr:
     type: http
     format: yaml
@@ -249,6 +256,17 @@ proxy-groups:
     max-failed-times: 3
     hidden: false
     icon: "https://fastly.jsdelivr.net/gh/xiaolin-007/clash@main/icon/netflix.svg"
+  - name: "Emby"
+    type: "select"
+    proxies: ["节点选择", "延迟选优", "故障转移", "全局直连"]
+    include-all: true
+    interval: 300
+    timeout: 3000
+    url: "https://www.google.com/generate_204"
+    lazy: true
+    max-failed-times: 3
+    hidden: false
+    icon: "https://quantil.jsdelivr.net/gh/walkxcode/dashboard-icons/png/emby.png"
   - name: "电报SG"
     type: "select"
     proxies: ["节点选择", "延迟选优", "故障转移", "全局直连"]
@@ -282,7 +300,7 @@ proxy-groups:
     max-failed-times: 3
     hidden: false
     icon: "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/telegram.svg"
-  - name: "ChatGPT"
+  - name: "AI"
     type: "select"
     include-all: true
     proxies: ["节点选择", "延迟选优", "故障转移"]
@@ -383,9 +401,9 @@ proxy-groups:
 
 
 rules:
-  - DOMAIN-SUFFIX,nodeseek.com, nodeseek
-  - PROCESS-NAME,com.mountains.hills, emby
-  - PROCESS-NAME,com.hush.yamby, emby
+  - DOMAIN-SUFFIX,nodeseek.com, Nodeseek
+  - PROCESS-NAME,com.mountains.hills, Emby
+  - PROCESS-NAME,com.hush.yamby, Emby
   - "DOMAIN-SUFFIX,googleapis.cn,节点选择"
   - "DOMAIN-SUFFIX,gstatic.com,节点选择"
   - "DOMAIN-SUFFIX,xn--ngstr-lra8j.com,节点选择"
@@ -393,6 +411,8 @@ rules:
   - "DOMAIN,v2rayse.com,节点选择"
   - "RULE-SET,applications,全局直连"
   - "RULE-SET,private,全局直连"
+  - RULE-SET,AI, AI
+  - DOMAIN-SUFFIX,imgur.com, AI
   - "RULE-SET,reject,广告过滤"
   - "RULE-SET,icloud,微软服务"
   - "RULE-SET,apple,苹果服务"
