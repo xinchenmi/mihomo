@@ -202,6 +202,17 @@ proxy-groups:
     max-failed-times: 3
     hidden: false
     icon: "https://fastly.jsdelivr.net/gh/clash-verge-rev/clash-verge-rev.github.io@main/docs/assets/icons/google.svg"
+  - name: "Nodeseek"
+    type: "select"
+    proxies: ["节点选择", "延迟选优", "故障转移", "全局直连"]
+    include-all: true
+    interval: 300
+    timeout: 3000
+    url: "https://www.google.com/generate_204"
+    lazy: true
+    max-failed-times: 3
+    hidden: false
+    icon: "https://cdn.jsdelivr.net/gh/Vbaethon/HOMOMIX@main/Icon/Color/Panda.png"
   - name: "YouTube"
     type: "select"
     proxies: ["节点选择", "延迟选优", "故障转移", "全局直连"]
@@ -336,6 +347,9 @@ proxy-groups:
 
 
 rules:
+  - DOMAIN-SUFFIX,nodeseek.com, nodeseek
+  - PROCESS-NAME,com.mountains.hills, emby
+  - PROCESS-NAME,com.hush.yamby, emby
   - "DOMAIN-SUFFIX,googleapis.cn,节点选择"
   - "DOMAIN-SUFFIX,gstatic.com,节点选择"
   - "DOMAIN-SUFFIX,xn--ngstr-lra8j.com,节点选择"
