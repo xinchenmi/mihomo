@@ -7,55 +7,35 @@ tcp-concurrent: true
 find-process-mode: strict
 global-client-fingerprint: chrome
 
+# Profile Enhancement Merge Template for Clash Verge
+
 dns:
-enable: true
-ipv6: false
-default-nameserver:
-- 223.5.5.5 # 阿里DNS（国内首选）
-- 119.29.29.29 # 阿里DNS备用
-nameserver:
-- tls://1.1.1.1:853 # Cloudflare DoH（国外加密备份）
-- tls://8.8.8.8:853 # Google DoH（国外加密备份）
-- https://doh.pub/dns-query # 公共DoH（冗余）
-fallback:
-- tls://1.1.1.1:853 # Cloudflare TLS备份
-- tls://8.8.8.8:853 # Google TLS备份
-fallback-filter:
-geoip: true # 按地理位置选择最优备用DNS
-geoip-code: CN # 优先中国大陆节点
-ipcidr:
-- 240.0.0.0/4 # 过滤保留IP段
-enhanced-mode: fake-ip
-fake-ip-range: 198.18.0.1/16
-use-hosts: true # 启用hosts文件优先解析
-fake-ip-filter:
-# 国内服务直连（高频优化）
-- '.lan'
-- '.localdomain'
-- '.example'
-- '.invalid'
-- '.localhost'
-- '.test'
-- '.home.arpa'
-- 'time..com' # 时间同步服务
-- 'ntp..com'
-- '.music.163.com' # 网易云音乐
-- 'music.migu.cn' # 咪咕音乐
-- 'xbox..microsoft.com' # Xbox Live
-- 'proxy.golang.org' # Go语言依赖
-- '+.stun..' # WebRTC直连
-- '.ffxiv.com' # 游戏《最终幻想14》
-# 国内基础服务保底
-- 'dns.msftncsi.com' # 微软网络诊断
-- 'www.msftncsi.com'
-- 'www.msftconnecttest.com'
-- 'localhost.ptlogin2.qq.com' # 微信/QQ登录
-# 其他安全过滤
-- '.cn' # 中国境内域名直连
-- '.com.cn'
-- '.net.cn'
-- '.org.cn'
-- '*.gov.cn'
+  enable: true
+  ipv6: true
+  prefer-h3: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  use-hosts: true
+  nameserver:
+    - https://dns.google/dns-query
+    - https://8.8.8.8/dns-query
+    - https://1.1.1.1/dns-query
+    - https://cloudflare-dns.com/dns-query
+    - https://dns.quad9.net/dns-query
+    - https://doh.sb/dns-query
+    - https://dns-unfiltered.adguard.com/dns-query
+    - https://doh.opendns.com/dns-query
+    - https://dnstp.quad9.net/dns-query
+  nameserver-policy:
+    "geosite:cn,private":
+    - https://doh.pub/dns-query
+    - https://1.12.12.12/dns-query
+    - https://120.53.53.53/dns-query
+    - https://dns.alldns.com/dns-query
+  fake-ip-filter:
+    - ""
+    - "+.lan"
+    - "+.local"
 
 proxy-groups:
   - {name:  节点选择, include-all: true, type: select, proxies: [ 自动选择, DIRECT], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Proxy.png }
