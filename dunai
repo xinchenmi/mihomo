@@ -9,32 +9,83 @@ global-client-fingerprint: chrome
 
 # Profile Enhancement Merge Template for Clash Verge
 
+#dns:
+#  enable: true
+#  cache-algorithm: arc
+#  listen: 0.0.0.0:1053
+#  ipv6: true
+#  respect-rules: true
+#  use-hosts: false
+#  use-system-hosts: false
+#  enhanced-mode: fake-ip
+#  fake-ip-range: 198.18.0.1/16
+#  fake-ip-filter:
+#    - "+.lan"
+#    - "+.local"
+#    - "localhost.ptlogin2.qq.com"
+#    - "localhost.work.weixin.qq.com"
+#    - "+.msftncsi.com"
+#    - "+.msftconnecttest.com"
+#    - WORKGROUP
+#  nameserver:
+#    - https://8.8.8.8/dns-query#h3=true
+#    - https://8.8.4.4/dns-query
+#  proxy-server-nameserver:
+#    - 223.5.5.5
+#  direct-nameserver:
+#    - 223.5.5.5
+#    - 119.29.29.29
+
+ntp:
+  enable: true
+  # 是否同步至系统时间，需要 root/管理员权限
+  write-to-system: false
+  server: time.apple.com
+  port: 123
+  interval: 30
+
+# 域名嗅探
+sniffer:
+  enable: true
+  sniff:
+    TLS:
+      ports: [443, 8443]
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+
 dns:
   enable: true
-  cache-algorithm: arc
-  listen: 0.0.0.0:1053
+  listen: :1053
   ipv6: true
-  respect-rules: true
-  use-hosts: false
-  use-system-hosts: false
-  enhanced-mode: fake-ip
-  fake-ip-range: 198.18.0.1/16
+  # 路由器个人建议使用 redir-host 以最佳兼容性
+  # 其他设备可以使用 fake-ip
+  enhanced-mode: redir-host
+  fake-ip-range: 28.0.0.1/8
   fake-ip-filter:
-    - "+.lan"
-    - "+.local"
-    - "localhost.ptlogin2.qq.com"
-    - "localhost.work.weixin.qq.com"
-    - "+.msftncsi.com"
-    - "+.msftconnecttest.com"
-    - WORKGROUP
-  nameserver:
-    - https://8.8.8.8/dns-query#h3=true
-    - https://8.8.4.4/dns-query
-  proxy-server-nameserver:
-    - 223.5.5.5
-  direct-nameserver:
+    - '*'
+    - '+.lan'
+    - '+.local'
+  default-nameserver:
     - 223.5.5.5
     - 119.29.29.29
+    - 114.114.114.114
+    - '[2402:4e00::]'
+    - '[2400:3200::1]'
+  nameserver:
+    - 'tls://8.8.4.4#dns'
+    - 'tls://1.0.0.1#dns'
+    - 'tls://[2001:4860:4860::8844]#dns'
+    - 'tls://[2606:4700:4700::1001]#dns'
+  proxy-server-nameserver:
+    - https://doh.pub/dns-query
+  nameserver-policy:
+    "geosite:cn,private":
+      - https://doh.pub/dns-query
+      - https://dns.alidns.com/dns-query
+    "geosite:!cn,!private": 
+      - "tls://dns.google"
+      - "tls://cloudflare-dns.com"
 
 
 proxy-groups:
@@ -55,6 +106,7 @@ proxy-groups:
   - {name:  漏网之鱼, include-all: true, type: select, proxies: [ 节点选择, DIRECT,  自动选择], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Final.png}
 
 rule-providers:
+  AWAvenue-Ads:{behavior:domain, type: http, url:"https://ghfast.top/https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/refs/heads/main/Filters/AWAvenue-Ads-Rule-Clash-Classical.yaml", interval: 86400, path: ./rule_provider/AWAvenue-Ads.yaml}
   jsproxy: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/qklg/pic@master/ruleset/jsproxy.yaml", interval: 86400, path: ./ACL4SSR/jsproxy.yaml}
   LocalAreaNetwork: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/LocalAreaNetwork.yaml", interval: 86400, path: ./ACL4SSR/LocalAreaNetwork.yaml}
   UnBan: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/UnBan.yaml", interval: 86400, path: ./ACL4SSR/UnBan.yaml}
@@ -68,7 +120,7 @@ rule-providers:
   GoogleFCM: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/Ruleset/GoogleFCM.yaml", interval: 86400, path: ./ACL4SSR/GoogleFCM.yaml}  
   YouTube: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/Ruleset/YouTube.yaml", interval: 86400, path: ./ACL4SSR/YouTube.yaml}    
   ProxyLite: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/ProxyLite.yaml", interval: 86400, path: ./ACL4SSR/ProxyLite.yaml}
-  Telegram: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/Ruleset/Telegram.yaml", interval: 86400, path: ./ACL4SSR/Telegram.yaml}
+  # Telegram: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/Ruleset/Telegram.yaml", interval: 86400, path: ./ACL4SSR/Telegram.yaml}
   AI: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/Ruleset/AI.yaml", interval: 86400, path: ./ACL4SSR/AI.yaml}
   Bahamut: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/Ruleset/Bahamut.yaml", interval: 86400, path: ./ACL4SSR/Bahamut.yaml}
   Microsoft: {behavior: classical, type: http, url: "https://quantil.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Providers/Ruleset/Microsoft.yaml", interval: 86400, path: ./ACL4SSR/Microsoft.yaml}
