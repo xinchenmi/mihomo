@@ -85,6 +85,21 @@ dns:
     - 'tls://[2606:4700:4700::1001]#dns'
   proxy-server-nameserver:
     - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
+  fallback:
+    - 'tls://8.8.8.8'
+    - 'tls://1.1.1.1'
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    geosite:
+      - gfw
+    ipcidr:
+      - 240.0.0.0/4
+    domain:
+      - +.google.com
+      - +.facebook.com
+      - +.youtube.com
   nameserver-policy:
     "geosite:cn,private":
       - https://doh.pub/dns-query
@@ -167,6 +182,7 @@ rules:
   - RULE-SET,Bahamut, 巴哈姆特  
   - RULE-SET,ProxyMedia, 国外媒体
   - RULE-SET,ProxyLite, 节点选择
+  - DOMAIN-SUFFIX,adobe.io,REJECT # 阻止Adobe软件联网
   - RULE-SET,BanAD,REJECT
   - RULE-SET,BanProgramAD,REJECT
   - RULE-SET,BanEasyList,REJECT
@@ -175,6 +191,12 @@ rules:
   - GEOSITE,google, PROXY
   - GEOSITE,geolocation-!cn, PROXY
   - GEOSITE,CN,DIRECT
-  - GEOIP,CN,DIRECT	  	
+  - GEOIP,CN,DIRECT
+# 绕过局域网地址
+  - IP-CIDR,10.0.0.0/8,DIRECT
+  - IP-CIDR,172.16.0.0/12,DIRECT
+  - IP-CIDR,192.168.0.0/16,DIRECT
+  - IP-CIDR,100.64.0.0/10,DIRECT
+  - IP-CIDR,127.0.0.0/8,DIRECT
 	# 需要使用小程序的加上，在访问冷门的国外网站时会泄露DNS，一般没事。
   - MATCH, 漏网之鱼
