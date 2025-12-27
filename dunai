@@ -93,7 +93,7 @@ proxy-groups:
     proxies:
       - 最优延迟
       - 故障转移
-      - 负载均衡-IX
+      - 负载均衡
       - 自动选择
       - DIRECT
     icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Proxy.png
