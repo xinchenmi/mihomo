@@ -9,27 +9,33 @@ global-client-fingerprint: chrome
 
 # Profile Enhancement Merge Template for Clash Verge
 
-hosts: {'*.hostloc.com': 23.225.155.86, '*.nodeseek.com': 104.26.10.72, '*.linux.do': 104.26.12.174, '*.githubusercontent.com': 185.199.108.133}
 dns:
   enable: true
-  listen: ':53'
-  enhanced-mode: 'fake-ip'
-  fake-ip-range: '198.18.0.1/16'
-  fake-ip-filter-mode: 'blacklist'
-  prefer-h3: false
-  respect-rules: false
-  use-hosts: true
-  ipv6: false
-  fake-ip-filter: ['*.lan', '*.local', '*.arpa', 'localhost.ptlogin2.qq.com', '*.msftncsi.com', 'www.msftconnecttest.com', 'time.*.com', 'ntp.*.com', '+.market.xiaomi.com']
-  default-nameserver: ['system', '223.6.6.6', '119.29.29.29', '8.8.8.8']
-  nameserver: ['8.8.8.8', 'https://doh.pub/dns-query', 'https://dns.alidns.com/dns-query']
-  proxy-server-nameserver: ['https://doh.pub/dns-query', 'https://dns.alidns.com/dns-query', 'tls://223.5.5.5']
-  direct-nameserver-follow-policy: false
-  fallback-filter:
-    geoip: true
-    geoip-code: 'CN'
-    ipcidr: ['240.0.0.0/4', '0.0.0.0/32']
-    domain: ['+.google.com', '+.facebook.com', '+.youtube.com', '+.github.com', '+.twitter.com', '+.telegram.org']
+  cache-algorithm: arc
+  listen: 0.0.0.0:1053
+  ipv6: true
+  respect-rules: true
+  use-hosts: false
+  use-system-hosts: false
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    - "+.lan"
+    - "+.local"
+    - "localhost.ptlogin2.qq.com"
+    - "localhost.work.weixin.qq.com"
+    - "+.msftncsi.com"
+    - "+.msftconnecttest.com"
+    - WORKGROUP
+  nameserver:
+    - https://8.8.8.8/dns-query#h3=true
+    - https://8.8.4.4/dns-query
+  proxy-server-nameserver:
+    - 223.5.5.5
+  direct-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+
 
 proxy-groups:
   - {name:  节点选择, include-all: true, type: select, proxies: [ 自动选择, DIRECT], icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Proxy.png }
@@ -106,4 +112,11 @@ rules:
   - RULE-SET,BanAD,REJECT
   - RULE-SET,BanProgramAD,REJECT
   - RULE-SET,BanEasyList,REJECT
+  - GEOSITE,private,DIRECT
+	- GEOIP,private,DIRECT,no-resolve
+  - GEOSITE,google, PROXY
+  - GEOSITE,geolocation-!cn, PROXY
+  - GEOSITE,CN,DIRECT
+  - GEOIP,CN,DIRECT	  	
+	# 需要使用小程序的加上，在访问冷门的国外网站时会泄露DNS，一般没事。
   - MATCH, 漏网之鱼
