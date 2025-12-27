@@ -187,7 +187,7 @@ rules:
   - RULE-SET,BanProgramAD,REJECT
   - RULE-SET,BanEasyList,REJECT
   - GEOSITE,private,DIRECT
-	- GEOIP,private,DIRECT,no-resolve
+  - GEOIP,private,DIRECT,no-resolve
   - GEOSITE,google, PROXY
   - GEOSITE,geolocation-!cn, PROXY
   - GEOSITE,CN,DIRECT
@@ -198,5 +198,5 @@ rules:
   - IP-CIDR,192.168.0.0/16,DIRECT
   - IP-CIDR,100.64.0.0/10,DIRECT
   - IP-CIDR,127.0.0.0/8,DIRECT
-	# 需要使用小程序的加上，在访问冷门的国外网站时会泄露DNS，一般没事。
+# 需要使用小程序的加上，在访问冷门的国外网站时会泄露DNS，一般没事。
   - MATCH, 漏网之鱼
