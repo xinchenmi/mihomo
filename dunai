@@ -91,19 +91,10 @@ proxy-groups:
     type: select
     include-all: true
     proxies:
-      - 最优延迟
       - 故障转移
       - 自动选择
       - DIRECT
     icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Proxy.png
-
-  - name: 最优延迟
-    type: url-test
-    include-all: true
-    url: https://www.gstatic.com/generate_204
-    interval: 150
-    tolerance: 50
-    icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Speedtest.png
 
   - name: 故障转移
     type: fallback
