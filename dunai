@@ -1,5 +1,5 @@
 mixed-port: 7897
-allow-lan: true   # Windows 本机一般也可以设为 false 更安全；若要局域网设备连接则保持 true
+allow-lan: true
 mode: rule
 log-level: info
 
@@ -8,7 +8,6 @@ tcp-concurrent: true
 find-process-mode: strict
 global-client-fingerprint: chrome
 
-# NTP（可选）
 ntp:
   enable: true
   write-to-system: false
@@ -16,7 +15,6 @@ ntp:
   port: 123
   interval: 30
 
-# 域名嗅探（可选）
 sniffer:
   enable: true
   sniff:
@@ -29,16 +27,12 @@ sniffer:
 dns:
   enable: true
   cache-algorithm: arc
-
-  # Windows 上 53 端口可能被占用/需要管理员权限；用 1053 更稳
   listen: 127.0.0.1:1053
-
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter-mode: blacklist
   prefer-h3: false
   ipv6: false
-
   respect-rules: true
   use-hosts: false
   use-system-hosts: false
@@ -55,23 +49,19 @@ dns:
     - "time.*.com"
     - "ntp.*.com"
 
-  # 用于解析 “DNS 服务器域名本身”
   default-nameserver:
     - 223.5.5.5
     - 119.29.29.29
     - 114.114.114.114
 
-  # 主用（国内 DoH）
   nameserver:
     - https://doh.pub/dns-query
     - https://dns.alidns.com/dns-query
 
-  # 代理链路中用来解析的 DNS，避免“鸡生蛋”
   proxy-server-nameserver:
     - https://doh.pub/dns-query
     - https://dns.alidns.com/dns-query
 
-  # 海外备用（配合 fallback-filter 才有意义）
   fallback:
     - "tls://8.8.8.8"
     - "tls://1.1.1.1"
@@ -88,7 +78,6 @@ dns:
       - "+.facebook.com"
       - "+.youtube.com"
 
-  # 分开解析：CN/私有 → 国内 DNS；非CN → 海外 DoT
   nameserver-policy:
     "geosite:cn,private":
       - https://doh.pub/dns-query
@@ -393,22 +382,18 @@ rule-providers:
     path: ./ACL4SSR/TelegramNL.yaml
 
 rules:
-  # 业务自定义
   - DOMAIN-SUFFIX,nodeseek.com,nodeseek
   - PROCESS-NAME,com.mountains.hills,emby
   - PROCESS-NAME,com.hush.yamby,emby
 
-  # 先拦截广告（放前面更稳）
   - RULE-SET,AWAvenue-Ads,REJECT
   - RULE-SET,BanAD,REJECT
   - RULE-SET,BanProgramAD,REJECT
   - RULE-SET,BanEasyList,REJECT
 
-  # 局域网 & 放行
   - RULE-SET,LocalAreaNetwork,DIRECT
   - RULE-SET,UnBan,DIRECT
 
-  # 你的自定义分流
   - RULE-SET,jsproxy,节点选择
   - RULE-SET,OneDrive,节点选择
   - RULE-SET,TelegramSG,电报新加坡
@@ -417,30 +402,25 @@ rules:
   - RULE-SET,Microsoft,微软服务
   - RULE-SET,Apple,苹果服务
 
-  # 国内直连
   - RULE-SET,ChinaIp,DIRECT
   - RULE-SET,ChinaDomain,DIRECT
   - RULE-SET,ChinaCompanyIp,DIRECT
   - RULE-SET,SteamRegionCheck,DIRECT
   - RULE-SET,Hetzner,DIRECT
 
-  # 视频/谷歌
   - RULE-SET,YouTube,油管视频
   - RULE-SET,Google,谷歌服务
-  - RULE-SET,GoogleCN,DIRECT        #  修正：GoogleCN 走直连更符合其定位
+  - RULE-SET,GoogleCN,DIRECT
   - RULE-SET,GoogleFCM,谷歌服务
 
-  # AI / 媒体 / 其他
   - RULE-SET,AI,人工智能
   - DOMAIN-SUFFIX,imgur.com,人工智能
   - RULE-SET,Bahamut,巴哈姆特
   - RULE-SET,ProxyMedia,国外媒体
   - RULE-SET,ProxyLite,节点选择
 
-  # 阻止 Adobe（按你原逻辑保留）
   - DOMAIN-SUFFIX,adobe.io,REJECT
 
-  # 一些常用兜底（把你原来写成 PROXY 的地方统一改为 节点选择，避免不存在的组）
   - GEOSITE,private,DIRECT
   - GEOIP,private,DIRECT,no-resolve
   - GEOSITE,google,节点选择
@@ -448,12 +428,10 @@ rules:
   - GEOSITE,CN,DIRECT
   - GEOIP,CN,DIRECT
 
-  # 绕过局域网地址
   - IP-CIDR,10.0.0.0/8,DIRECT
   - IP-CIDR,172.16.0.0/12,DIRECT
   - IP-CIDR,192.168.0.0/16,DIRECT
   - IP-CIDR,100.64.0.0/10,DIRECT
   - IP-CIDR,127.0.0.0/8,DIRECT
 
-  # 最终兜底
   - MATCH,漏网之鱼
