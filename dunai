@@ -93,7 +93,6 @@ proxy-groups:
     proxies:
       - 最优延迟
       - 故障转移
-      - 负载均衡
       - 自动选择
       - DIRECT
     icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Proxy.png
@@ -113,14 +112,6 @@ proxy-groups:
     interval: 150
     icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Bypass.png
 
-  #  只放你指定的两个节点，且用不易冲突的名字，避免 Verge 合并后变空组
-  - name: 负载均衡
-    type: load-balance
-    include-all: true
-    url: https://www.gstatic.com/generate_204
-    interval: 150
-    strategy: round-robin
-    icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Download.png
 
   - name: 自动选择
     type: url-test
