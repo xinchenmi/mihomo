@@ -113,15 +113,13 @@ proxy-groups:
     interval: 150
     icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Bypass.png
 
-  # ✅ 只放你指定的两个节点，且用不易冲突的名字，避免 Verge 合并后变空组
-  - name: 负载均衡-IX
+  #  只放你指定的两个节点，且用不易冲突的名字，避免 Verge 合并后变空组
+  - name: 负载均衡
     type: load-balance
+    include-all: true
     url: https://www.gstatic.com/generate_204
     interval: 150
     strategy: round-robin
-    proxies:
-      - "深圳电信① IX -> IX本地"
-      - "深圳电信② IX -> IX本地"
     icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Download.png
 
   - name: 自动选择
