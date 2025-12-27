@@ -437,8 +437,7 @@ rules:
 # 阻止 Adobe
   - DOMAIN-SUFFIX,adobe.io,REJECT
 
-# 一些常用兜底（把
-原来写成 PROXY 的地方统一改为 节点选择，避免不存在的组）
+# 一些常用兜底（把原来写成 PROXY 的地方统一改为 节点选择，避免不存在的组）
   - GEOSITE,private,DIRECT
   - GEOIP,private,DIRECT,no-resolve
   - GEOSITE,google,节点选择
