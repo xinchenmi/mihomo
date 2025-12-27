@@ -56,16 +56,22 @@ sniffer:
 
 dns:
   enable: true
-  listen: :1053
+  cache-algorithm: arc
+  listen: 0.0.0.0:1053
   ipv6: true
-  # 路由器个人建议使用 redir-host 以最佳兼容性
-  # 其他设备可以使用 fake-ip
-  enhanced-mode: redir-host
-  fake-ip-range: 28.0.0.1/8
+  respect-rules: true
+  use-hosts: false
+  use-system-hosts: false
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
   fake-ip-filter:
-    - '*'
-    - '+.lan'
-    - '+.local'
+    - "+.lan"
+    - "+.local"
+    - "localhost.ptlogin2.qq.com"
+    - "localhost.work.weixin.qq.com"
+    - "+.msftncsi.com"
+    - "+.msftconnecttest.com"
+    - WORKGROUP
   default-nameserver:
     - 223.5.5.5
     - 119.29.29.29
