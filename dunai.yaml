@@ -101,7 +101,6 @@ proxy-groups:
     proxies:
       - 最优延迟
       - 故障转移
-      - 自动选择
       - DIRECT
     icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Proxy.png
 
@@ -120,13 +119,6 @@ proxy-groups:
     interval: 150
     icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Bypass.png
 
-  - name: 自动选择
-    type: url-test
-    include-all: true
-    url: https://www.gstatic.com/generate_204
-    interval: 150
-    tolerance: 50
-    icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Auto.png
 
   - name: 电报新加坡
     type: select
