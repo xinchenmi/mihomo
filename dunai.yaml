@@ -162,7 +162,7 @@ dns:
       - "+.youtube.com"
 
   # 分开解析：CN/私有 → 国内 DNS；非CN → 海外 DoT
-  # （这里把你原来的 "geosite:cn,private" / "geosite:!cn,!private" 拆开写，更兼容更稳）
+  # （"geosite:cn,private" / "geosite:!cn,!private" 拆开写，更兼容更稳）
   nameserver-policy:
     "geosite:cn":
       - https://doh.pub/dns-query
