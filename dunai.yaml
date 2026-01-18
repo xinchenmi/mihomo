@@ -67,6 +67,15 @@ sniffer:
     - 'fe80::/10'          # IPv6 链路本地
     - '::1/128'            # IPv6 本机回环
 
+tun:
+  enable: true
+  stack: mixed
+  auto-route: true
+  strict-route: true
+  dns-hijack:
+    - any:53
+    - any:853
+
 # Windows 上 53 端口可能被占用/需要管理员权限；用 1053 更稳
 dns:
   enable: true
@@ -506,6 +515,17 @@ rules:
 # 局域网 & 放行
   - RULE-SET,LocalAreaNetwork,DIRECT
   - RULE-SET,UnBan,DIRECT
+
+# 强制微信直连（Windows）
+  - PROCESS-NAME,WeChat.exe,DIRECT
+  - PROCESS-NAME,Weixin.exe,DIRECT
+
+# 可选：微信/QQ 相关域名也强制直连（更保险）
+  - DOMAIN-SUFFIX,wechat.com,DIRECT
+  - DOMAIN-SUFFIX,weixin.qq.com,DIRECT
+  - DOMAIN-SUFFIX,qq.com,DIRECT
+  - DOMAIN-SUFFIX,qpic.cn,DIRECT
+
 
 # 手动自定义分流
   - RULE-SET,jsproxy,节点选择
