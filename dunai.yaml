@@ -19,13 +19,54 @@ ntp:
 # 域名嗅探（可选）
 sniffer:
   enable: true
+  parse-pure-ip: true
+  override-destination: false
   sniff:
-    TLS:
-      ports: [443, 8443]
     HTTP:
       ports: [80, 8080-8880]
-  override-destination: true
-  
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+      override-destination: false
+    QUIC:
+      ports: [443, 8443]
+      override-destination: false
+  skip-domain: # 忽略嗅探
+    - 'Mijia Cloud'
+    - '+.push.apple.com'
+    - '+.wechat.com'
+    - '+.qpic.cn'
+    - '+.qq.com'
+    - '+.wechatapp.com'
+    #  语音通信
+    - '+.vivox.com'
+    # 向日葵服务
+    - '+.oray.com'
+    - '+.sunlogin.net'
+  skip-dst-address:
+    - '149.154.160.0/20'
+    - '185.76.151.0/24'
+    - '91.105.192.0/23'
+    - '91.108.16.0/21'
+    - '91.108.4.0/22'
+    - '91.108.56.0/22'
+    - '91.108.8.0/21'
+    - '95.161.64.0/20'
+    - '2001:67c:4e8::/48'
+    - '2001:b28:f23c::/47'
+    - '2001:b28:f23f::/48'
+    - '2a0a:f280::/29'
+    - '127.0.0.0/8'        # 本机回环
+    - '10.0.0.0/8'         # A类私有
+    - '172.16.0.0/12'      # B类私有
+    - '192.168.0.0/16'     # C类私有
+    - '169.254.0.0/16'     # 链路本地
+    - '224.0.0.0/4'        # 组播地址
+    - '240.0.0.0/4'        # 保留地址
+    - 'fc00::/7'           # IPv6 ULA
+    - 'fe80::/10'          # IPv6 链路本地
+    - '::1/128'            # IPv6 本机回环
+
 # Windows 上 53 端口可能被占用/需要管理员权限；用 1053 更稳
 dns:
   enable: true
@@ -48,27 +89,53 @@ dns:
     - "localhost.work.weixin.qq.com"
     - "+.msftncsi.com"
     - "+.msftconnecttest.com"
-    - "WORKGROUP"
     - "time.*.com"
     - "ntp.*.com"
+    - geosite:connectivity-check
+    - geosite:private
+    - geosite:cn
+    - +.stun.*.*
+    - +.stun.*.*.*
+    - +.stun.*.*.*.*
+    - +.stun.*.*.*.*.*
+    - "*.n.n.srv.nintendo.net"
+    - +.stun.playstation.net
+    - "*.*.xboxlive.com"
+    - +.teracloud.jp
+    - "+.t.me"
+    - "+.telegram.org"
+    - "+.telegram.me"
+    - "+.tdesktop.com"
+    - "+.telegra.ph"
+    - "+.telesco.pe"
+    - "+.telegram-cdn.org"
+    - "+.cdn-telegram.org"
+    - "+.telegramdownload.com"
+    - "+.telegram.dog"
+    - "+.graph.org"
+    - "+.legra.ph"
+    - "+.tx.me"
+    - "+.tg.dev"  
+    - "WORKGROUP"
 
-# 用于解析 “DNS 服务器域名本身”
+
+  # 用于解析 “DNS 服务器域名本身”
   default-nameserver:
     - 223.5.5.5
     - 119.29.29.29
     - 114.114.114.114
-    
-# 主用（国内 DoH）
+
+  # 主用（国内 DoH）
   nameserver:
     - https://doh.pub/dns-query
     - https://dns.alidns.com/dns-query
 
-# 代理链路中用来解析的 DNS，避免“鸡生蛋”
+  # 代理链路中用来解析的 DNS，避免“鸡生蛋”
   proxy-server-nameserver:
     - https://doh.pub/dns-query
     - https://dns.alidns.com/dns-query
 
-# 海外备用（配合 fallback-filter 才有意义）
+  # 海外备用（配合 fallback-filter 才有意义）
   fallback:
     - "tls://8.8.8.8"
     - "tls://1.1.1.1"
@@ -85,12 +152,16 @@ dns:
       - "+.facebook.com"
       - "+.youtube.com"
 
-# 分开解析：CN/私有 → 国内 DNS；非CN → 海外 DoT
+  # 分开解析：CN/私有 → 国内 DNS；非CN → 海外 DoT
+  # （这里把你原来的 "geosite:cn,private" / "geosite:!cn,!private" 拆开写，更兼容更稳）
   nameserver-policy:
-    "geosite:cn,private":
+    "geosite:cn":
       - https://doh.pub/dns-query
       - https://dns.alidns.com/dns-query
-    "geosite:!cn,!private":
+    "geosite:private":
+      - https://doh.pub/dns-query
+      - https://dns.alidns.com/dns-query
+    "geosite:geolocation-!cn":
       - "tls://dns.google"
       - "tls://cloudflare-dns.com"
 
@@ -101,6 +172,7 @@ proxy-groups:
     proxies:
       - 最优延迟
       - 故障转移
+      - 负载轮询
       - DIRECT
     icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Proxy.png
 
@@ -114,95 +186,123 @@ proxy-groups:
 
   - name: 故障转移
     type: fallback
-    include-all: true
+    proxies:
+      - Halo
+      - zouter-原生IP
+      - renet
+      - zouter
+      - zouter v6-干饭
     url: https://www.gstatic.com/generate_204
     interval: 150
     icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Bypass.png
 
+  - name: 负载轮询
+    type: load-balance
+    proxies:
+      - Halo
+      - zouter-原生IP
+      - renet
+      - zouter 
+      - zouter v6-干饭
+    url: https://www.google.com/generate_204
+    interval: 150
+    icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Auto.png 
 
   - name: 电报新加坡
     type: select
     include-all: true
-    proxies: [节点选择, DIRECT, 自动选择]
+    proxies: [节点选择, DIRECT, 最优延迟]
     icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Telegram.png
 
   - name: 电报美国
     type: select
     include-all: true
-    proxies: [节点选择, DIRECT, 自动选择]
+    proxies: [节点选择, DIRECT, 最优延迟]
     icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Telegram.png
 
   - name: 电报荷兰
     type: select
     include-all: true
-    proxies: [节点选择, DIRECT, 自动选择]
+    proxies: [节点选择, DIRECT, 最优延迟]
     icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Telegram.png
-
-  - name: nodeseek
+    
+  - name: 电报兜底
     type: select
     include-all: true
-    proxies: [节点选择, DIRECT, 自动选择]
+    proxies: [节点选择, DIRECT, 最优延迟]
+    icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Telegram.png
+    
+  - name: Nodeseek
+    type: select
+    include-all: true
+    proxies: [节点选择, DIRECT, 最优延迟]
     icon: https://cdn.jsdelivr.net/gh/Vbaethon/HOMOMIX@main/Icon/Color/Panda.png
 
+  - name: 探针
+    type: select
+    include-all: true
+    proxies: [节点选择, DIRECT, 最优延迟]
+    icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Want_Want.png
+    
   - name: 人工智能
     type: select
     include-all: true
-    proxies: [节点选择, DIRECT, 自动选择]
+    proxies: [节点选择, DIRECT, 最优延迟]
     icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/ChatGPT.png
 
   - name: 国外媒体
     type: select
     include-all: true
-    proxies: [节点选择, DIRECT, 自动选择]
+    proxies: [节点选择, DIRECT, 最优延迟]
     icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Netflix.png
 
   - name: 巴哈姆特
     type: select
     include-all: true
-    proxies: [节点选择, DIRECT, 自动选择]
+    proxies: [节点选择, DIRECT, 最优延迟]
     icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Bahamut.png
 
   - name: 油管视频
     type: select
     include-all: true
-    proxies: [节点选择, DIRECT, 自动选择]
+    proxies: [节点选择, DIRECT, 最优延迟]
     icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/YouTube.png
 
   - name: emby
     type: select
     include-all: true
-    proxies: [节点选择, DIRECT, 自动选择]
+    proxies: [节点选择, DIRECT, 最优延迟]
     icon: https://quantil.jsdelivr.net/gh/walkxcode/dashboard-icons/png/emby.png
 
   - name: 谷歌服务
     type: select
     include-all: true
-    proxies: [节点选择, DIRECT, 自动选择]
+    proxies: [节点选择, DIRECT, 最优延迟]
     icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Google.png
 
   - name: 微软服务
     type: select
     include-all: true
-    proxies: [节点选择, DIRECT, 自动选择]
+    proxies: [节点选择, DIRECT, 最优延迟]
     icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Microsoft.png
 
   - name: 苹果服务
     type: select
     include-all: true
-    proxies: [节点选择, DIRECT, 自动选择]
+    proxies: [节点选择, DIRECT, 最优延迟]
     icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Apple.png
 
   - name: 漏网之鱼
     type: select
     include-all: true
-    proxies: [节点选择, DIRECT, 自动选择]
+    proxies: [节点选择, DIRECT, 最优延迟]
     icon: https://quantil.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Final.png
 
 rule-providers:
   AWAvenue-Ads:
     behavior: domain
     type: http
-    url: "https://ghfast.top/https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/refs/heads/main/Filters/AWAvenue-Ads-Rule-Clash-Classical.yaml"
+    url: "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/refs/heads/main/Filters/AWAvenue-Ads-Rule-Clash-Classical.yaml"
     interval: 86400
     path: ./rule_provider/AWAvenue-Ads.yaml
 
@@ -363,27 +463,37 @@ rule-providers:
   TelegramSG:
     behavior: classical
     type: http
-    url: "https://quantil.jsdelivr.net/gh/qklg/pic@master/ruleset/TelegramSG.yaml"
+    url: "https://quantil.jsdelivr.net/gh/xinchenmi/mihomo@main/TelegramSG.yaml"
     interval: 86400
     path: ./ACL4SSR/TelegramSG.yaml
 
   TelegramUS:
     behavior: classical
     type: http
-    url: "https://quantil.jsdelivr.net/gh/qklg/pic@master/ruleset/TelegramUS.yaml"
+    url: "https://quantil.jsdelivr.net/gh/xinchenmi/mihomo@main/TelegramUS.yaml"
     interval: 86400
     path: ./ACL4SSR/TelegramUS.yaml
 
   TelegramNL:
     behavior: classical
     type: http
-    url: "https://quantil.jsdelivr.net/gh/qklg/pic@master/ruleset/TelegramNL.yaml"
+    url: "https://quantil.jsdelivr.net/gh/xinchenmi/mihomo@main/TelegramNL.yaml"
     interval: 86400
     path: ./ACL4SSR/TelegramNL.yaml
 
+  TelegramALL:
+    behavior: classical
+    type: http
+    url: "https://quantil.jsdelivr.net/gh/xinchenmi/mihomo@main/TelegramALL.yaml"
+    interval: 86400
+    path: ./ACL4SSR/TelegramALL.yaml
+
+
 rules:
 # 按需增加，我这里是为了分流ns和手机上观看emby
-  - DOMAIN-SUFFIX,nodeseek.com,nodeseek
+  - DOMAIN-SUFFIX,nodeseek.com,Nodeseek
+  - DOMAIN-SUFFIX,mjj.dog,探针
+  - DOMAIN,mjj.dog,探针
   - PROCESS-NAME,com.mountains.hills,emby
   - PROCESS-NAME,com.hush.yamby,emby
 
@@ -403,6 +513,7 @@ rules:
   - RULE-SET,TelegramSG,电报新加坡
   - RULE-SET,TelegramUS,电报美国
   - RULE-SET,TelegramNL,电报荷兰
+  - RULE-SET,TelegramALL,电报兜底
   - RULE-SET,Microsoft,微软服务
   - RULE-SET,Apple,苹果服务
 
@@ -445,4 +556,4 @@ rules:
   - IP-CIDR,127.0.0.0/8,DIRECT
 
 # 最终兜底
-  - MATCH,漏网之鱼
+  - MATCH,漏网之鱼  
