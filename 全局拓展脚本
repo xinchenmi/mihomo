@@ -1,84 +1,95 @@
 function main(content) {
-  const isObject = (v) => v !== null && typeof v === 'object' && !Array.isArray(v)
+  const isObject = (v) => v !== null && typeof v === "object" && !Array.isArray(v);
 
-  // 深合并：对象递归合并；数组默认用 new 覆盖 old（避免重复/不可控）
   const deepMerge = (oldVal, newVal) => {
-    if (!isObject(oldVal)) oldVal = {}
-    if (!isObject(newVal)) return oldVal
-    const out = { ...oldVal }
+    if (!isObject(oldVal)) oldVal = {};
+    if (!isObject(newVal)) return oldVal;
+    const out = { ...oldVal };
     for (const [k, v] of Object.entries(newVal)) {
-      if (isObject(v) && isObject(out[k])) out[k] = deepMerge(out[k], v)
-      else out[k] = v
+      if (isObject(v) && isObject(out[k])) out[k] = deepMerge(out[k], v);
+      else out[k] = v;
     }
-    return out
-  }
+    return out;
+  };
 
-  //  更稳的 default-nameserver：用 IP
-  const cnDefaultNs = ['223.5.5.5', '223.6.6.6']
+  // 更稳的 default-nameserver：用 IP
+  const cnDefaultNs = ["223.5.5.5", "223.6.6.6"];
 
-  // 可信解析（你原本的）
+  // 可信解析（保留）
   const trustNs = [
-    'quic://dns.cooluc.com',
-    'https://doh.apad.pro/dns-query',
-    'https://1.0.0.1/dns-query',
-  ]
+    "quic://dns.cooluc.com",
+    "https://doh.apad.pro/dns-query",
+    "https://1.0.0.1/dns-query",
+  ];
 
   // Notion 专用
-  const notionDns = 'tls://dns.jerryw.cn'
+  const notionDns = "tls://dns.jerryw.cn";
   const notionDomains = [
-    'http-inputs-notion.splunkcloud.com',
-    '+.notion-static.com',
-    '+.notion.com',
-    '+.notion.new',
-    '+.notion.site',
-    '+.notion.so',
-  ]
-  const notionKey = notionDomains.join(',')
+    "http-inputs-notion.splunkcloud.com",
+    "+.notion-static.com",
+    "+.notion.com",
+    "+.notion.new",
+    "+.notion.site",
+    "+.notion.so",
+  ];
+
+  // 生成更兼容的 policy（逐条域名）
+  const notionPolicy = {};
+  for (const d of notionDomains) notionPolicy[d] = notionDns;
 
   const dnsPatch = {
     enable: true,
-    'prefer-h3': true,
 
-    // 不破坏你 Sub-Store 的 fake-ip 结构，只补/覆关键字段
-    'default-nameserver': cnDefaultNs,
+    // 不要强行改 prefer-h3；如果你想开，就在主配置里开
+    // "prefer-h3": true,
 
-    // nameserver 你可选：如果你想完全尊重 Sub-Store，就注释掉这行
-    nameserver: trustNs,
+    "default-nameserver": cnDefaultNs,
 
-    'nameserver-policy': {
-      [notionKey]: notionDns,
-      'geosite:geolocation-!cn': trustNs,
+    // 默认不覆盖 nameserver（尊重你 YAML 的国内 DoH 主用设计）
+    // nameserver: trustNs,
+
+    "nameserver-policy": {
+      ...notionPolicy,
+      "geosite:geolocation-!cn": trustNs,
     },
-  }
+  };
 
-  // geox-url（保持你原逻辑）
-  const githubPrefix = 'https://fastgh.lainbo.com/'
+  // DNS 深合并（保留）
+  content.dns = deepMerge(content.dns, dnsPatch);
+
+  // geox-url（保留）
+  const githubPrefix = "https://fastgh.lainbo.com/";
   const rawGeoxURLs = {
-    geoip: 'https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.dat',
-    geosite: 'https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat',
-    mmdb: 'https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb',
-  }
+    geoip:
+      "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.dat",
+    geosite:
+      "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat",
+    mmdb:
+      "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb",
+  };
   const accelURLs = Object.fromEntries(
-    Object.entries(rawGeoxURLs).map(([k, u]) => [k, `${githubPrefix}${u}`]),
-  )
+    Object.entries(rawGeoxURLs).map(([k, u]) => [k, `${githubPrefix}${u}`])
+  );
+
+  // sniffer 不要覆盖，用 deepMerge 合并一个“补丁”
+  const snifferPatch = {
+    enable: true,
+    sniff: {
+      TLS: { ports: [443, 8443] },
+      HTTP: { ports: [80, "8080-8880"], "override-destination": true },
+      // 你如果想补 QUIC，也可以加：
+      // QUIC: { ports: [443, 8443], "override-destination": false },
+    },
+  };
+  content.sniffer = deepMerge(content.sniffer, snifferPatch);
 
   const otherOptions = {
-    'unified-delay': true,
-    'tcp-concurrent': true,
-    profile: { 'store-selected': true, 'store-fake-ip': true },
-    sniffer: {
-      enable: true,
-      sniff: {
-        TLS: { ports: [443, 8443] },
-        HTTP: { ports: [80, '8080-8880'], 'override-destination': true },
-      },
-    },
-    'geodata-mode': true,
-    'geox-url': accelURLs,
-  }
+    "unified-delay": true,
+    "tcp-concurrent": true,
+    profile: { "store-selected": true, "store-fake-ip": true },
+    "geodata-mode": true,
+    "geox-url": accelURLs,
+  };
 
-  //  深合并 DNS：不会把 Sub-Store 的 fallback / fake-ip / policy 分流给覆盖掉
-  content.dns = deepMerge(content.dns, dnsPatch)
-
-  return { ...content, ...otherOptions }
+  return { ...content, ...otherOptions };
 }
