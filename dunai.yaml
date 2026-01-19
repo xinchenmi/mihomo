@@ -81,11 +81,15 @@ dns:
   enable: true
   cache-algorithm: arc
   listen: 127.0.0.1:1053
+
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter-mode: blacklist
+
   prefer-h3: false
-  ipv6: false
+  ipv6: true
+
+  # 开了 respect-rules: true，就建议保留 proxy-server-nameserver（官方也写了“需要配置”）
   respect-rules: true
   use-hosts: false
   use-system-hosts: false
@@ -100,17 +104,17 @@ dns:
     - "+.msftconnecttest.com"
     - "time.*.com"
     - "ntp.*.com"
-    - geosite:connectivity-check
-    - geosite:private
-    - geosite:cn
-    - +.stun.*.*
-    - +.stun.*.*.*
-    - +.stun.*.*.*.*
-    - +.stun.*.*.*.*.*
+    - "geosite:connectivity-check"
+    - "geosite:private"
+    - "geosite:cn"
+    - "+.stun.*.*"
+    - "+.stun.*.*.*"
+    - "+.stun.*.*.*.*"
+    - "+.stun.*.*.*.*.*"
     - "*.n.n.srv.nintendo.net"
-    - +.stun.playstation.net
+    - "+.stun.playstation.net"
     - "*.*.xboxlive.com"
-    - +.teracloud.jp
+    - "+.teracloud.jp"
     - "+.t.me"
     - "+.telegram.org"
     - "+.telegram.me"
@@ -124,55 +128,51 @@ dns:
     - "+.graph.org"
     - "+.legra.ph"
     - "+.tx.me"
-    - "+.tg.dev"  
+    - "+.tg.dev"
     - "WORKGROUP"
 
-
-  # 用于解析 “DNS 服务器域名本身”
+  # 用于解析“DNS 上游域名本身”
+  # 官方要求：default-nameserver 必须是 IP（可以是加密 DNS 但仍要求 IP 形式）
   default-nameserver:
     - 223.5.5.5
     - 119.29.29.29
-    - 114.114.114.114
 
-  # 主用（国内 DoH）
+  # 默认 DNS（没命中 policy 的域名会走这里）
+  # 已经用 IP 直连 DoH 了（比 dns.alidns.com 这种域名更省一次解析）
   nameserver:
-    - https://doh.pub/dns-query
-    - https://dns.alidns.com/dns-query
+    - https://1.12.12.12/dns-query
+    - https://223.5.5.5/dns-query
 
-  # 代理链路中用来解析的 DNS，避免“鸡生蛋”
+  # 仅用于“解析代理节点 server 的域名”
+  # respect-rules: true 时，官方明确说需要配这个，避免“鸡生蛋”
   proxy-server-nameserver:
-    - https://doh.pub/dns-query
-    - https://dns.alidns.com/dns-query
+    - https://1.12.12.12/dns-query
+    - https://223.5.5.5/dns-query
 
-  # 海外备用（配合 fallback-filter 才有意义）
-  fallback:
-    - "tls://8.8.8.8"
-    - "tls://1.1.1.1"
-
-  fallback-filter:
-    geoip: true
-    geoip-code: CN
-    geosite:
-      - gfw
-    ipcidr:
-      - 240.0.0.0/4
-    domain:
-      - "+.google.com"
-      - "+.facebook.com"
-      - "+.youtube.com"
-
-  # 分开解析：CN/私有 → 国内 DNS；非CN → 海外 DoT
-  # （"geosite:cn,private" / "geosite:!cn,!private" 拆开写，更兼容更稳）
+  # 用 nameserver-policy 做分流（替代你原来的 fallback/fallback-filter 思路）
   nameserver-policy:
-    "geosite:cn":
-      - https://doh.pub/dns-query
-      - https://dns.alidns.com/dns-query
+    # 私有/局域网域名：不要走公共 DoH，优先走“你局域网/系统的 DNS”
     "geosite:private":
-      - https://doh.pub/dns-query
-      - https://dns.alidns.com/dns-query
+      #  桌面端（mihomo / Clash Verge Rev / CFW 等）一般用 system 更通用
+      - system
+
+      #  如果发现 system 会递归（比如系统 DNS 被客户端改成了 127.0.0.1:1053），
+      # 那就把上面 system 改成你路由器/LAN DNS 的 IP，例如：
+      # - 192.168.1.1
+
+      #  仅 CMFA（Clash Meta for Android）才有 dhcp://system 这个写法（mihomo 文档有标注）
+      # - dhcp://system
+
+    # 国内域名：国内 DNS
+    "geosite:cn":
+      - https://1.12.12.12/dns-query
+      - https://223.5.5.5/dns-query
+
+    # 非 CN：海外 DoT（通常会按路由规则走代理）
     "geosite:geolocation-!cn":
       - "tls://dns.google"
       - "tls://cloudflare-dns.com"
+
 
 proxy-groups:
   - name: 节点选择
