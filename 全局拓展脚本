@@ -12,49 +12,15 @@ function main(content) {
     return out;
   };
 
-  // 更稳的 default-nameserver：用 IP
-  const cnDefaultNs = ["223.5.5.5", "223.6.6.6"];
+  // default-nameserver：用 IP（OK）
+  const cnDefaultNs = ["223.5.5.5", "119.29.29.29", "223.6.6.6"];
 
-  // 可信解析（保留）
-  const trustNs = [
-    "quic://dns.cooluc.com",
-    "https://doh.apad.pro/dns-query",
-    "https://1.0.0.1/dns-query",
-  ];
-
-  // Notion 专用
-  const notionDns = "tls://dns.jerryw.cn";
-  const notionDomains = [
-    "http-inputs-notion.splunkcloud.com",
-    "+.notion-static.com",
-    "+.notion.com",
-    "+.notion.new",
-    "+.notion.site",
-    "+.notion.so",
-  ];
-
-  // 生成更兼容的 policy（逐条域名）
-  const notionPolicy = {};
-  for (const d of notionDomains) notionPolicy[d] = notionDns;
-
+  // DNS patch：只补 default-nameserver，不碰你 YAML 的 nameserver / nameserver-policy
   const dnsPatch = {
     enable: true,
-
-    // 不要强行改 prefer-h3；如果你想开，就在主配置里开
-    // "prefer-h3": true,
-
     "default-nameserver": cnDefaultNs,
-
-    // 默认不覆盖 nameserver（尊重你 YAML 的国内 DoH 主用设计）
-    // nameserver: trustNs,
-
-    "nameserver-policy": {
-      ...notionPolicy,
-      "geosite:geolocation-!cn": trustNs,
-    },
   };
 
-  // DNS 深合并（保留）
   content.dns = deepMerge(content.dns, dnsPatch);
 
   // geox-url（保留）
@@ -71,14 +37,12 @@ function main(content) {
     Object.entries(rawGeoxURLs).map(([k, u]) => [k, `${githubPrefix}${u}`])
   );
 
-  // sniffer 不要覆盖，用 deepMerge 合并一个“补丁”
+  // sniffer patch（保留）
   const snifferPatch = {
     enable: true,
     sniff: {
       TLS: { ports: [443, 8443] },
       HTTP: { ports: [80, "8080-8880"], "override-destination": true },
-      // 你如果想补 QUIC，也可以加：
-      // QUIC: { ports: [443, 8443], "override-destination": false },
     },
   };
   content.sniffer = deepMerge(content.sniffer, snifferPatch);
