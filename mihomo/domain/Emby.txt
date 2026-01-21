@@ -1,5 +1,6 @@
 # 规则名称: Emby
-# 规则统计: 210
+# 规则统计: 211
+DOMAIN-SUFFIX,rfc.uhdnow.com
 DOMAIN-SUFFIX,www.lilyemby.com
 DOMAIN-SUFFIX,tx.lilyemby.com
 DOMAIN-SUFFIX,aliyun.lilyemby.com
