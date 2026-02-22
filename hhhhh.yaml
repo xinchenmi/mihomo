@@ -159,12 +159,12 @@ dns:
       - https://dns.google/dns-query
     # 私有/局域网域名：不要走公共 DoH，优先走“你局域网/系统的 DNS”
     "geosite:private":
-      # ✅ 桌面端（mihomo / Clash Verge Rev / CFW 等）一般用 system 更通用
+      #  桌面端（mihomo / Clash Verge Rev / CFW 等）一般用 system 更通用
       - system
-      # ⚠️ 如果你发现 system 会递归（比如系统 DNS 被客户端改成了 127.0.0.1:1053），
+      #  如果你发现 system 会递归（比如系统 DNS 被客户端改成了 127.0.0.1:1053），
       # 那就把上面 system 改成你路由器/LAN DNS 的 IP，例如：
       # - 192.168.1.1
-      # ⚠️ 仅 CMFA（Clash Meta for Android）才有 dhcp://system 这个写法（mihomo 文档有标注）
+      #  仅 CMFA（Clash Meta for Android）才有 dhcp://system 这个写法（mihomo 文档有标注）
       # - dhcp://system
       # 国内域名：国内 DNS
     "geosite:cn":
@@ -333,7 +333,7 @@ rule-providers:
   ChinaDNS_Domain:
     behavior: domain
     type: http
-    url:url: "https://cdn.jsdelivr.net/gh/Accademia/Additional_Rule_For_Clash@master/ChinaDNS/ChinaDNS_Domain.yaml"
+    url: "https://cdn.jsdelivr.net/gh/Accademia/Additional_Rule_For_Clash@master/ChinaDNS/ChinaDNS_Domain.yaml"
 
     interval: 86400
     path: ./ruleset/ChinaDNS_Domain.yaml
