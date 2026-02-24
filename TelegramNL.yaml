@@ -1,4 +1,39 @@
 payload:
+  - DOMAIN,api.imem.app
+  - DOMAIN,api.swiftgram.app
+  - DOMAIN-SUFFIX,ayugram.one
+  - DOMAIN-SUFFIX,cdn-telegram.org
+  - DOMAIN-SUFFIX,comments.app
+  - DOMAIN-SUFFIX,contest.com
+  - DOMAIN-SUFFIX,forkgram.org
+  - DOMAIN-SUFFIX,graph.org
+  - DOMAIN-SUFFIX,ime.io
+  - DOMAIN-SUFFIX,imemessenger.app
+  - DOMAIN-SUFFIX,legra.ph
+  - DOMAIN-SUFFIX,mbrx.app
+  - DOMAIN-SUFFIX,nekogram.app
+  - DOMAIN-SUFFIX,nicegram.app
+  - DOMAIN-SUFFIX,nicegram.io
+  - DOMAIN-SUFFIX,nicegram.org
+  - DOMAIN-SUFFIX,plusmessenger.org
+  - DOMAIN-SUFFIX,quiz.directory
+  - DOMAIN-SUFFIX,stel.com
+  - DOMAIN-SUFFIX,swiftgram.app
+  - DOMAIN-SUFFIX,t.me
+  - DOMAIN-SUFFIX,tdesktop.com
+  - DOMAIN-SUFFIX,telega.one
+  - DOMAIN-SUFFIX,telegra.ph
+  - DOMAIN-SUFFIX,telegram-cdn.org
+  - DOMAIN-SUFFIX,telegramdownload.com
+  - DOMAIN-SUFFIX,telesco.pe
+  - DOMAIN-SUFFIX,tg.dev
+  - DOMAIN-SUFFIX,tx.me
+  - DOMAIN-SUFFIX,unigram.app
+  - DOMAIN-SUFFIX,usercontent.dev
+  - DOMAIN-SUFFIX,webk.app
+  - DOMAIN-KEYWORD,nicegram
+  - DOMAIN-KEYWORD,telegram
+  
   - IP-ASN,62041,no-resolve
   - IP-ASN,211157,no-resolve
 
